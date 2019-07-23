@@ -127,3 +127,22 @@ namespace TweakUtility
         }
     }
 }
+
+
+/// <summary>
+/// Opens the GitHub Issues page of TweakUtility, preset with exception details.
+/// </summary>
+public static void SendCrashReport(Exception ex)
+{
+    string title = HttpUtility.UrlEncode(ex.Message);
+    string body = $"***Please make sure this report doesn't contain any personal details accidentally picked up by this program.***\n\n"
+        + $"**Message**\n{ex.Message}\n\n"
+        + $"**Source**\n{ex.Source}\n\n"
+        + $"**Stack Trace**\n```{ex.StackTrace}```\n\n";
+
+    body = HttpUtility.UrlEncode(body);
+
+    string url = $"https://github.com/Craftplacer/TweakUtility/issues/new?labels=crash+report&title={title}&body={body}";
+
+    OpenURL(url);
+}
